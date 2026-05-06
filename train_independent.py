@@ -136,7 +136,7 @@ ENT_DECAY_FLOOR    = 0.1
 SILENCE_PEN = 0.05
 
 # ── Seeds: independent ranges ──
-N_SEEDS = 5
+N_SEEDS = 10
 SEEDS_A = list(range(42, 42 + N_SEEDS))
 SEEDS_B = list(range(142, 142 + N_SEEDS))
 TOK = [str(i) for i in range(VOCAB)] + ['SIL']

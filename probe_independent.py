@@ -56,7 +56,7 @@ N_A = 3; T_EP = 10; VOCAB = 6; SILENCE = VOCAB; V = VOCAB + 1
 HIDDEN = 128
 INPUT_DIM = N_S + N_C + V + V + T_EP
 
-N_SEEDS = 5
+N_SEEDS = 10
 SEEDS_A = list(range(42, 42 + N_SEEDS))
 SEEDS_B = list(range(142, 142 + N_SEEDS))
 
