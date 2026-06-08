@@ -1,6 +1,6 @@
 # Emergent Language as an Approach to Conscious AI
 
-This repository is the source code for our paper [**Emergent Language as an Approach to Conscious AI**](https://arxiv.org/abs/2606.06380).
+This repository is the source code for our paper **Emergent Language as an Approach to Conscious AI**.
 
 ![Framework](https://github.com/wuzengqing001225/ConsciousAI_Indexicality/blob/main/IMG/cover.png?raw=true)
 
