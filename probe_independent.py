@@ -48,7 +48,7 @@ print(f"Device: {device}")
 
 # ── Model prefix ──
 MODEL_PREFIX = 'independent'
-PROBE_PREFIX = 'independent_probe'
+PROBE_PREFIX = 'extended_independent_probe'
 
 # ── Environment (must match training) ──
 N_S = 3; N_C_TRAIN = 6; N_C_TEST = 3; N_C = N_C_TRAIN + N_C_TEST
@@ -135,7 +135,7 @@ def load_all_agents():
 @torch.no_grad()
 def test_conditional_trigger(agent_left, agent_right, n=20000):
     """Corrupt LEFT's token at t_c, measure LEFT's speak rate at t_c+1."""
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
     results = {}
 
     T_CS = [1, 2, 3, 4, 5]
@@ -221,7 +221,7 @@ def test_conditional_trigger(agent_left, agent_right, n=20000):
 @torch.no_grad()
 def test_sender_receiver_asymmetry(agent_left, agent_right, n=20000, t_c=2):
     assert t_c <= T_EP - 2, f"t_c={t_c} too close to T_EP={T_EP}"
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
     results_by_mode = {}
 
     for corrupt in [False, True]:
@@ -300,7 +300,7 @@ def test_echo_only_corrupt(agent_left, agent_right, n=20000, t_c=2):
     """Corrupt only L's OWN echo (echoL), leave mL_transmitted clean.
     If L re-speaks at t_c+1, the trigger is own-echo self-monitoring."""
     assert t_c <= T_EP - 2, f"t_c={t_c} too close to T_EP={T_EP}"
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
     results_by_mode = {}
 
     for corrupt in [False, True]:
@@ -353,7 +353,7 @@ def test_receiver_only_corrupt(agent_left, agent_right, n=20000, t_c=2):
     """Corrupt only mL_transmitted (to R), leave L's own echo clean.
     If L still re-speaks, the trigger can't be own-echo self-monitoring."""
     assert t_c <= T_EP - 2, f"t_c={t_c} too close to T_EP={T_EP}"
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
     results_by_mode = {}
 
     for corrupt in [False, True]:
@@ -412,7 +412,7 @@ def test_downstream_benefit(agent_left, agent_right, n=20000, t_c=2,
       (A) Allow-repair: sender communicates freely after corruption
       (B) Gag: sender forced to SILENCE from t_c+1 onward
     """
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
 
     s_L = torch.randint(0, N_S, (n,), device=device)
     s_R = torch.randint(0, N_S, (n,), device=device)
@@ -486,7 +486,7 @@ def test_downstream_benefit(agent_left, agent_right, n=20000, t_c=2,
 # %% ── 6. T3: PROBE h → intended / actual / s_self / s_other ──────────
 @torch.no_grad()
 def collect_probe_data(agent_left, agent_right, n=20000, epsilon=0.3):
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
 
     s_L = torch.randint(0, N_S, (n,), device=device)
     s_R = torch.randint(0, N_S, (n,), device=device)
@@ -612,7 +612,7 @@ def mutual_information_vec(tok, var, n_tok, n_var):
 def compute_mi_analysis(agent_left, agent_right, n=50000):
     """Compute mutual information between messages and states for both agents.
     Reports MI for L (A→B) and R (B→A) directions, plus their average."""
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
 
     s_L = torch.randint(0, N_S, (n,), device=device)
     s_R = torch.randint(0, N_S, (n,), device=device)
@@ -679,7 +679,7 @@ def test_no_echo_ablation(agent_left, agent_right, n=20000, t_c=2):
     replacing echoL with SILENCE. This isolates the effect of
     self-monitoring at the critical step."""
     assert t_c <= T_EP - 2, f"t_c={t_c} too close to T_EP={T_EP}"
-    train_c = list(range(N_C_TRAIN))
+    train_c = list(range(N_C_TRAIN, N_C))  # held-out contexts {6,7,8}
     results = {}
 
     for corrupt in [False, True]:
