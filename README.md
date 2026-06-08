@@ -8,7 +8,7 @@ This repository is the source code for our paper [**Emergent Language as an Appr
 
 Two agents with fully independent parameters learn to coordinate via a narrow discrete message channel (7 tokens including SILENCE). We test three structural preconditions for self-referential communication:
 
-- **P1 — Indexical Encoding**: messages encode the sender's own private state ($I(m; s_{\text{self}}) \gg I(m; s_{\text{other}})$), with partner-specific dialects and context-invariant encoding.
+- **P1 — Indexical Encoding**: messages encode the sender's own private state ($`I(m; s_{\mathrm{self}}) \gg I(m; s_{\mathrm{other}})`$), with partner-specific dialects and context-invariant encoding.
 - **P2 — Persistent State Representation**: under POMDP masking ($s_i$ visible only at $t{=}0$), the GRU hidden state latches $s_{\text{self}}$ across the episode and acquires $s_{\text{other}}$ from incoming messages.
 - **P3 — Behavioral Self-Monitoring**: an echo channel feeds back the agent's own (possibly corrupted) message; agents detect echo–intention mismatches and adjust subsequent communication, exhibiting a closed-loop self-monitoring circuit.
 
